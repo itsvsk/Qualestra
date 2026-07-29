@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.14-slim
 ARG SENTINELQA_VERSION=0.1.0
 ARG SENTINELQA_REVISION=unknown
 ARG SENTINELQA_SOURCE=https://github.com/itsvsk/Qualestra
