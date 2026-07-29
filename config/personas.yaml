@@ -1,0 +1,6 @@
+personas:
+  owner: {name: Olivia Owner, role: owner, username: olivia@example.test}
+  admin: {name: Arun Admin, role: admin, username: arun@example.test}
+  editor: {name: Elena Editor, role: editor, username: elena@example.test}
+  viewer: {name: Victor Viewer, role: viewer, username: victor@example.test}
+  new_user: {name: Nora New User, role: editor, username: nora@example.test}

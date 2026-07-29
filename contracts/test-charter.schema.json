@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "TestCharter", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "impacts", "task_slices", "budget_allocation", "adjacent_features", "coverage_gaps", "uncertainties"],
+  "properties": {"schema_version": {"const": "1.0"}, "impacts": {"type": "array", "items": {"type": "object", "required": ["feature", "classification", "risk_score", "evidence"]}}, "task_slices": {"type": "array", "items": {"type": "object"}}, "budget_allocation": {"type": "object"}, "adjacent_features": {"type": "array", "items": {"type": "string"}}, "coverage_gaps": {"type": "array", "items": {"type": "string"}}, "uncertainties": {"type": "array", "items": {"type": "string"}}}
+}

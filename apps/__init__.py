@@ -1,0 +1,1 @@
+"""Qualestra application entry points."""

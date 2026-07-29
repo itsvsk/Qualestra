@@ -1,0 +1,14 @@
+version: "1"
+profiles:
+  ephemeral_ci:
+    unattended: true
+    allowed_origins: [http://atlas-web:5173, http://atlas-api:8080, http://localhost:5173, http://localhost:8080]
+    allowed_safety_classes: [safe, controlled]
+    restricted_actions: [delete_organization, delete_user, change_password, change_mfa, payment, external_message]
+    max_requests_per_second: 10
+  local_interactive:
+    unattended: false
+    allowed_origins: [http://localhost:5173, http://localhost:8080]
+    allowed_safety_classes: [safe, controlled]
+    restricted_actions: [delete_organization, delete_user, change_password, change_mfa, payment, external_message]
+    max_requests_per_second: 5

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentinelqa.example.test/contracts/delivery-result.schema.json",
+  "title": "DeliveryResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "delivery_id",
+    "attempt",
+    "status",
+    "connector_id",
+    "external_id",
+    "external_url",
+    "error",
+    "recorded_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "delivery_id": {"type": "string", "format": "uuid"},
+    "attempt": {"type": "integer", "minimum": 1},
+    "status": {"enum": ["succeeded", "failed"]},
+    "connector_id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 80,
+      "pattern": "^[a-z][a-z0-9_-]*$"
+    },
+    "external_id": {"type": ["string", "null"], "maxLength": 240},
+    "external_url": {"type": ["string", "null"], "maxLength": 2000},
+    "error": {
+      "oneOf": [
+        {"type": "null"},
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "category", "retryable", "redacted_message"],
+          "properties": {
+            "code": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 80,
+              "pattern": "^[a-z0-9][a-z0-9._-]*$"
+            },
+            "category": {
+              "enum": ["transient", "permanent", "policy", "configuration", "unknown"]
+            },
+            "retryable": {"type": "boolean"},
+            "redacted_message": {"type": "string", "minLength": 1, "maxLength": 500}
+          }
+        }
+      ]
+    },
+    "recorded_at": {"type": "string", "format": "date-time"}
+  }
+}

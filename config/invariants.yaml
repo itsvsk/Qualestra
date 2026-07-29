@@ -1,0 +1,10 @@
+invariants:
+  - {id: viewer_no_mutation, type: authorization, severity: critical}
+  - {id: tenant_isolation, type: tenant, severity: critical}
+  - {id: create_visible_ui_api, type: differential, severity: high}
+  - {id: update_survives_refresh, type: metamorphic, severity: high}
+  - {id: plan_limit_enforced, type: quota, severity: critical}
+  - {id: completed_export_nonempty, type: background_job, severity: high}
+  - {id: sensitive_action_audited, type: audit, severity: medium}
+  - {id: project_list_latency, type: reliability, severity: medium}
+  - {id: accessibility_serious, type: accessibility, severity: medium}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentinelqa.example.test/contracts/agent-result.schema.json",
+  "title": "AgentResult", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "task_id", "agent_type", "outcome", "result_ref", "summary", "evidence_refs", "budget_used", "produced_at"],
+  "properties": {
+    "schema_version": {"const": "1.0"}, "task_id": {"type": "string", "format": "uuid"},
+    "agent_type": {"enum": ["change_impact", "ui_explorer", "api_explorer", "data_invariant", "verification", "defect_triage"]},
+    "outcome": {"enum": ["succeeded", "failed", "cancelled", "budget_exhausted"]},
+    "result_ref": {"type": "string", "pattern": "^blackboard://"}, "summary": {"type": "object"},
+    "evidence_refs": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "budget_used": {"type": "object", "additionalProperties": false, "required": ["seconds", "tool_calls", "model_tokens", "api_requests", "artifact_bytes"], "properties": {"seconds": {"type": "number", "minimum": 0}, "tool_calls": {"type": "integer", "minimum": 0}, "model_tokens": {"type": "integer", "minimum": 0}, "api_requests": {"type": "integer", "minimum": 0}, "artifact_bytes": {"type": "integer", "minimum": 0}}},
+    "produced_at": {"type": "string", "format": "date-time"}
+  }
+}

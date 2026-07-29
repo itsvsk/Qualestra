@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "GateDecision", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "run_id", "outcome", "rules", "metrics", "blockers", "release_confidence", "generated_at"],
+  "properties": {"schema_version": {"const": "1.0"}, "run_id": {"type": "string", "format": "uuid"}, "outcome": {"enum": ["PASS", "WARN", "BLOCK"]}, "rules": {"type": "array"}, "metrics": {"type": "object"}, "blockers": {"type": "array", "items": {"type": "string"}}, "release_confidence": {"type": "number", "minimum": 0, "maximum": 1}, "generated_at": {"type": "string", "format": "date-time"}}
+}

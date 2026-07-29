@@ -1,0 +1,7 @@
+[
+  {"name":"atlas-baseline","listen":"0.0.0.0:18080","upstream":"atlas-api:8080","enabled":true,"toxics":[]},
+  {"name":"atlas-latency","listen":"0.0.0.0:18081","upstream":"atlas-api:8080","enabled":true,"toxics":[{"name":"latency","type":"latency","stream":"downstream","toxicity":1.0,"attributes":{"latency":500,"jitter":50}}]},
+  {"name":"atlas-timeout","listen":"0.0.0.0:18082","upstream":"atlas-api:8080","enabled":true,"toxics":[{"name":"timeout","type":"timeout","stream":"downstream","toxicity":1.0,"attributes":{"timeout":1000}}]},
+  {"name":"atlas-reset","listen":"0.0.0.0:18083","upstream":"atlas-api:8080","enabled":true,"toxics":[{"name":"reset","type":"reset_peer","stream":"downstream","toxicity":1.0,"attributes":{"timeout":100}}]},
+  {"name":"atlas-bandwidth","listen":"0.0.0.0:18084","upstream":"atlas-api:8080","enabled":true,"toxics":[{"name":"bandwidth","type":"bandwidth","stream":"downstream","toxicity":1.0,"attributes":{"rate":32}}]}
+]

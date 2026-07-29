@@ -1,0 +1,84 @@
+name: sentinelqa
+
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_DB: ${SENTINELQA_DB_NAME:-sentinelqa}
+      POSTGRES_USER: ${SENTINELQA_DB_USER:-sentinelqa}
+      POSTGRES_PASSWORD: ${SENTINELQA_DB_PASSWORD:?set SENTINELQA_DB_PASSWORD}
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${SENTINELQA_DB_USER:-sentinelqa} -d ${SENTINELQA_DB_NAME:-sentinelqa}",
+        ]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+    restart: unless-stopped
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  qa-worker:
+    image: ${SENTINELQA_WORKER_IMAGE:-ghcr.io/itsvsk/qualestra-worker}:${SENTINELQA_VERSION:-0.1.0}
+    command: ["sh", "-c", "alembic upgrade head && python -m apps.qa_worker.main"]
+    env_file:
+      - path: ${SENTINELQA_ENV_FILE:-.env.standalone}
+        required: true
+    environment:
+      ARTIFACT_ROOT: /artifacts
+      SENTINEL_DELIVERY_DIR: /artifacts/deliveries
+      SENTINEL_DELIVERY_CONFIG: ${SENTINEL_DELIVERY_CONFIG:-}
+      SENTINEL_APPLICATION_DIRECTORY: /project/applications
+      DATABASE_URL: postgresql+asyncpg://${SENTINELQA_DB_USER:-sentinelqa}:${SENTINELQA_DB_PASSWORD:?set SENTINELQA_DB_PASSWORD}@postgres:5432/${SENTINELQA_DB_NAME:-sentinelqa}
+      CONTROL_API_URL: http://127.0.0.1:8000
+      SENTINEL_WORKER_TOKEN: ${SENTINEL_WORKER_TOKEN:?set SENTINEL_WORKER_TOKEN}
+      SENTINEL_EMBED_CONTROL_API: "true"
+      SENTINEL_CONTROL_HOST: 0.0.0.0
+      SENTINEL_CONTROL_PORT: "8000"
+      SENTINEL_BROWSER_MODE: playwright
+      SENTINEL_DASHBOARD_ORIGINS: ${SENTINEL_DASHBOARD_ORIGINS:-http://localhost:3000}
+      LLM_PROVIDER: ${LLM_PROVIDER:-mock}
+      LLM_MODEL: ${LLM_MODEL:-}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+    init: true
+    ports:
+      - "${SENTINELQA_CONTROL_PORT:-8000}:8000"
+    restart: unless-stopped
+    volumes:
+      - artifacts:/artifacts
+      - ${SENTINELQA_PROJECT_DIR:-./sentinelqa-project}:/project:ro
+      - ${SENTINELQA_RUNTIME_DIR:-./sentinelqa-runtime}:/runtime:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/ready')",
+        ]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  dashboard:
+    image: ${SENTINELQA_DASHBOARD_IMAGE:-ghcr.io/itsvsk/qualestra-dashboard}:${SENTINELQA_VERSION:-0.1.0}
+    ports:
+      - "${SENTINELQA_DASHBOARD_PORT:-3000}:80"
+    restart: unless-stopped
+    depends_on:
+      qa-worker:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--spider", "http://127.0.0.1/health/ready"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  postgres-data:
+  artifacts:

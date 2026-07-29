@@ -1,0 +1,17 @@
+personas:
+  owner:
+    name: Owen Owner
+    role: owner
+    username: owen@acme.example
+    authentication:
+      type: form
+      login_path: /session
+      username_ref: env:ACME_OWNER_USERNAME
+      password_ref: env:ACME_OWNER_PASSWORD
+  viewer:
+    name: Vera Viewer
+    role: viewer
+    username: vera@acme.example
+    authentication:
+      type: oidc_token
+      access_token_ref: env:ACME_VIEWER_ACCESS_TOKEN

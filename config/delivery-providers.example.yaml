@@ -1,0 +1,24 @@
+schema_version: "1.0"
+destinations:
+  - provider: github
+    destination_id: github-release-defects
+    display_name: GitHub release defects
+    repository: example/sentinelqa-adopter
+    token_env: SENTINEL_GITHUB_ISSUES_TOKEN
+    labels: [sentinelqa, qa]
+
+  - provider: jira
+    destination_id: jira-release-defects
+    display_name: Jira release defects
+    base_url: https://example.atlassian.net
+    project_key: QA
+    api_token_env: SENTINEL_JIRA_API_TOKEN
+    user_email_env: SENTINEL_JIRA_USER_EMAIL
+    issue_type: Bug
+    labels: [sentinelqa, qa]
+
+  - provider: slack
+    destination_id: slack-release-alerts
+    display_name: Slack release alerts
+    channel: C0123456789
+    token_env: SENTINEL_SLACK_BOT_TOKEN

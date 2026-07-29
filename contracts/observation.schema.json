@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "Observation", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "run_id", "session_id", "state_fingerprint", "page", "persona", "controls", "signals", "evidence", "entities", "environment"],
+  "properties": {"schema_version": {"const": "1.0"}, "run_id": {"type": "string", "format": "uuid"}, "session_id": {"type": "string", "format": "uuid"}, "state_fingerprint": {"type": "string"}, "page": {"type": "object"}, "persona": {"type": "object"}, "controls": {"type": "array"}, "signals": {"type": "object"}, "evidence": {"type": "object"}, "entities": {"type": "array"}, "environment": {"type": "object"}}
+}

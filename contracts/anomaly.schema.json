@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "Anomaly", "type": "object", "additionalProperties": false,
+  "required": ["id", "run_id", "oracle_type", "route", "action_type", "signal", "expected", "actual", "severity_hint", "evidence_refs", "suspected_component"],
+  "properties": {"id": {"type": "string", "format": "uuid"}, "run_id": {"type": "string", "format": "uuid"}, "oracle_type": {"type": "string"}, "route": {"type": "string"}, "action_type": {"type": "string"}, "signal": {"type": "string"}, "expected": {"type": "string"}, "actual": {"type": "string"}, "severity_hint": {"enum": ["low", "medium", "high", "critical"]}, "evidence_refs": {"type": "array", "items": {"type": "string"}}, "suspected_component": {"type": "string"}}
+}

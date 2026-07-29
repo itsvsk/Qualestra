@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "EventEnvelope", "type": "object", "additionalProperties": false,
+  "required": ["event_id", "event_type", "schema_version", "occurred_at", "run_id", "correlation_id", "producer", "payload"],
+  "properties": {"event_id": {"type": "string", "format": "uuid"}, "event_type": {"type": "string", "pattern": "^(run|agent\\.task|agent\\.execution|agent\\.result|agent\\.arbitration|state|action|anomaly|verification|defect|coverage|gate|report|delivery)\\."}, "schema_version": {"const": "1.0"}, "occurred_at": {"type": "string", "format": "date-time"}, "run_id": {"type": "string", "format": "uuid"}, "correlation_id": {"type": "string", "format": "uuid"}, "producer": {"type": "string"}, "payload": {"type": "object"}}
+}

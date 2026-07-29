@@ -1,0 +1,18 @@
+id: atlas-local
+base_url: http://atlas-web
+api_base_url: http://atlas-api:8080
+openapi_url: http://atlas-api:8080/openapi.json
+allowed_origins: [http://atlas-web, http://atlas-api:8080]
+persona_file: ../personas.yaml
+legacy_invariant_file: ../invariants.yaml
+health_url: http://atlas-api:8080/health/ready
+test_control_url: http://atlas-api:8080/__test
+risk_areas:
+  authorization: critical
+  tenant_isolation: critical
+  billing_limits: high
+  exports: high
+  audit_log: high
+destructive_routes: ["DELETE /organizations/{id}"]
+volatile_selectors: ["[data-generated-at]"]
+critical_journeys: [onboarding, create_and_refresh_work_item, viewer_cannot_modify, export_completion]

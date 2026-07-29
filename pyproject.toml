@@ -1,0 +1,86 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "qualestra"
+dynamic = ["version"]
+description = "Supervised AI orchestration for evidence-first software quality"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+  {name = "Vishal Appu Daniel", email = "vishal.appu.daniel@gmail.com"},
+]
+keywords = ["quality-assurance", "testing", "agents", "playwright", "release-gates"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Environment :: Console",
+  "Intended Audience :: Developers",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.12",
+  "Topic :: Software Development :: Quality Assurance",
+  "Typing :: Typed",
+]
+dependencies = [
+  "alembic>=1.14,<2",
+  "asyncpg>=0.30,<1",
+  "fastapi>=0.115,<1",
+  "httpx>=0.28,<1",
+  "jsonschema>=4.23,<5",
+  "openai>=1.58,<2",
+  "playwright>=1.49,<2",
+  "pydantic>=2.10,<3",
+  "pydantic-settings>=2.7,<3",
+  "PyYAML>=6.0,<7",
+  "schemathesis>=4,<5",
+  "sqlalchemy>=2.0,<3",
+  "uvicorn[standard]>=0.34,<1",
+]
+
+[project.scripts]
+qualestra = "sentinelqa.cli.main:main"
+sentinelqa = "sentinelqa.cli.main:main"
+
+[project.urls]
+Homepage = "https://github.com/itsvsk/Qualestra"
+Repository = "https://github.com/itsvsk/Qualestra.git"
+Issues = "https://github.com/itsvsk/Qualestra/issues"
+Changelog = "https://github.com/itsvsk/Qualestra/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+s3 = [
+  "boto3>=1.35,<2",
+]
+dev = [
+  "mypy>=1.14,<2",
+  "pytest>=8.3,<9",
+  "pytest-asyncio>=0.25,<1",
+  "ruff>=0.9,<1",
+  "types-jsonschema>=4.23,<5",
+  "types-PyYAML>=6,<7",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["sentinelqa", "apps", "atlas"]
+exclude = ["apps/dashboard"]
+
+[tool.hatch.version]
+path = "sentinelqa/__init__.py"
+
+[tool.pytest.ini_options]
+addopts = "-q"
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "ASYNC", "S"]
+ignore = ["S101"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+plugins = ["pydantic.mypy"]

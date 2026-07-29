@@ -1,0 +1,25 @@
+name: Qualestra Nightly
+on:
+  schedule: [{cron: '17 1 * * *'}]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  broad:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: pip install uv==0.11.29
+      - run: uv sync --locked --extra dev
+      - run: uv run python scripts/run_benchmark.py --profile all --seeds 41021,41022,41023 --output artifacts/nightly-benchmark.json
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sentinelqa-nightly-evidence
+          path: artifacts/
+          if-no-files-found: warn
+          retention-days: 14

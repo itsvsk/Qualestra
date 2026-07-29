@@ -1,0 +1,15 @@
+id: acme-tasks-local
+name: Acme Tasks
+adapter: static
+base_url: http://acme-web:8080
+api_base_url: http://acme-api:8080
+allowed_origins: [http://acme-web:8080, http://acme-api:8080]
+health_url: http://acme-api:8080/health
+openapi_url: http://acme-api:8080/openapi.json
+persona_file: ../personas/acme-tasks.yaml
+invariant_file: ../invariants/acme-tasks.yaml
+risk_areas:
+  authorization: critical
+  task_persistence: high
+critical_journeys: [sign_in, create_task, complete_task]
+destructive_routes: ["DELETE /v1/tasks/{id}"]

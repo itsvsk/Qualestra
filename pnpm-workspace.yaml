@@ -1,0 +1,7 @@
+packages:
+  - apps/dashboard
+confirmModulesPurge: false
+onlyBuiltDependencies:
+  - esbuild
+allowBuilds:
+  esbuild: true

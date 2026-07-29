@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "CandidateAction", "type": "object", "additionalProperties": false,
+  "required": ["action_type", "safety_class", "target_origin"],
+  "properties": {"action_type": {"enum": ["navigate", "click", "fill", "select", "check", "uncheck", "submit", "upload_fixture", "keyboard", "refresh", "back", "forward", "wait_for", "api_request", "assert_invariant"]}, "control_id": {"type": ["string", "null"]}, "input": {"type": ["string", "null"]}, "safety_class": {"enum": ["safe", "controlled", "restricted"]}, "target_origin": {"type": "string"}}
+}

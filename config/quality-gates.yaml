@@ -1,0 +1,13 @@
+version: 1
+profiles:
+  pull_request:
+    block_when:
+      - {metric: verified_critical_defects, operator: ">", value: 0}
+      - {metric: verified_high_authorization_or_data_integrity_defects, operator: ">", value: 0}
+      - {metric: critical_journey_success_rate, operator: "<", value: 1.0}
+      - {metric: required_contract_checks_passed, operator: "==", value: false}
+      - {metric: policy_violations_executed, operator: ">", value: 0}
+    warn_when:
+      - {metric: changed_feature_transition_coverage, operator: "<", value: 0.75}
+      - {metric: reproduction_rate, operator: "<", value: 0.90}
+      - {metric: environment_error_rate, operator: ">", value: 0.05}

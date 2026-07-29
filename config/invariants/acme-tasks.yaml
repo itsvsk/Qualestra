@@ -1,0 +1,27 @@
+version: 1
+invariants:
+  - id: service_is_ready
+    description: Acme Tasks reports a ready health state.
+    severity: critical
+    request:
+      method: GET
+      path: /health
+    expect:
+      status: 200
+      max_duration_ms: 1500
+      json:
+        - path: $.status
+          operator: equals
+          value: ready
+  - id: viewer_reads_tasks
+    description: A viewer can retrieve the task collection.
+    severity: high
+    persona: viewer
+    request:
+      method: GET
+      path: /v1/tasks
+    expect:
+      status: 200
+      json:
+        - path: $.items
+          operator: exists

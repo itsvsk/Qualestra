@@ -1,0 +1,56 @@
+registry_version: 1
+platform_maximums:
+  max_seconds: 900
+  max_tool_calls: 200
+  max_model_tokens: 50000
+  max_api_requests: 1000
+  max_artifact_bytes: 209715200
+agents:
+  change_impact:
+    implementation: sentinelqa.agents.change_impact:ChangeImpactAgent
+    version: "1.0"
+    input_schema: contracts/agent-task.schema.json
+    result_schema: contracts/agent-result.schema.json
+    capabilities: [read_change_metadata, read_product_model]
+    concurrency_class: read_only
+    budget: {max_seconds: 90, max_tool_calls: 8, max_model_tokens: 8000}
+  ui_explorer:
+    implementation: sentinelqa.agents.ui_exploration:UIExplorationAgent
+    version: "1.0"
+    input_schema: contracts/agent-task.schema.json
+    result_schema: contracts/agent-result.schema.json
+    capabilities: [observe_ui, safe_ui_action, controlled_ui_action]
+    concurrency_class: exclusive_persona_session
+    budget: {max_seconds: 480, max_tool_calls: 60, max_model_tokens: 16000}
+  api_explorer:
+    implementation: sentinelqa.agents.api_exploration:APIExplorationAgent
+    version: "1.0"
+    input_schema: contracts/agent-task.schema.json
+    result_schema: contracts/agent-result.schema.json
+    capabilities: [read_openapi, safe_api_request, controlled_api_request]
+    concurrency_class: rate_limited_target
+    budget: {max_seconds: 420, max_tool_calls: 80, max_model_tokens: 10000, max_api_requests: 400}
+  data_invariant:
+    implementation: sentinelqa.agents.data_invariant:DataInvariantAgent
+    version: "1.0"
+    input_schema: contracts/agent-task.schema.json
+    result_schema: contracts/agent-result.schema.json
+    capabilities: [read_observations, read_test_data_adapter, evaluate_invariant]
+    concurrency_class: read_only
+    budget: {max_seconds: 180, max_tool_calls: 30, max_model_tokens: 4000}
+  verification:
+    implementation: sentinelqa.agents.verification:VerificationAgent
+    version: "1.0"
+    input_schema: contracts/agent-task.schema.json
+    result_schema: contracts/agent-result.schema.json
+    capabilities: [reset_test_target, seed_test_target, replay_ui, replay_api, read_evidence]
+    concurrency_class: exclusive_target_reset
+    budget: {max_seconds: 360, max_tool_calls: 60, max_model_tokens: 2000}
+  defect_triage:
+    implementation: sentinelqa.agents.defect_triage:DefectTriageAgent
+    version: "1.0"
+    input_schema: contracts/agent-task.schema.json
+    result_schema: contracts/agent-result.schema.json
+    capabilities: [read_verified_result, read_evidence_index, read_defect_history]
+    concurrency_class: read_only
+    budget: {max_seconds: 90, max_tool_calls: 10, max_model_tokens: 6000}

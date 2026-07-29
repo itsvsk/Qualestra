@@ -1,0 +1,67 @@
+"""Portable project integration contracts for Qualestra."""
+
+from .auth import (
+    ApiTokenAuthConfig,
+    AuthAdapter,
+    AuthConfig,
+    AuthMaterial,
+    BearerAuthConfig,
+    EnvironmentSecretResolver,
+    FormAuthConfig,
+    OIDCTokenAuthConfig,
+    build_auth_adapter,
+)
+from .http import PolicySafeHttpTool
+from .invariants import (
+    HttpInvariant,
+    HttpInvariantRunner,
+    InvariantDocument,
+    InvariantResult,
+    SafeHttpResponse,
+    SafeHttpTool,
+    load_invariants,
+)
+from .project import (
+    ApplicationConfig,
+    PersonaConfig,
+    ProjectAdapter,
+    ProjectAdapterRegistry,
+    StaticProjectAdapter,
+    find_application_path,
+    load_application,
+    load_personas,
+    load_project_adapter,
+    load_project_adapter_by_id,
+    resolve_config_reference,
+)
+
+__all__ = [
+    "ApiTokenAuthConfig",
+    "ApplicationConfig",
+    "AuthAdapter",
+    "AuthConfig",
+    "AuthMaterial",
+    "BearerAuthConfig",
+    "EnvironmentSecretResolver",
+    "FormAuthConfig",
+    "HttpInvariant",
+    "HttpInvariantRunner",
+    "InvariantDocument",
+    "InvariantResult",
+    "OIDCTokenAuthConfig",
+    "PersonaConfig",
+    "PolicySafeHttpTool",
+    "ProjectAdapter",
+    "ProjectAdapterRegistry",
+    "SafeHttpResponse",
+    "SafeHttpTool",
+    "StaticProjectAdapter",
+    "build_auth_adapter",
+    "find_application_path",
+    "load_application",
+    "load_invariants",
+    "load_personas",
+    "load_project_adapter",
+    "load_project_adapter_by_id",
+    "resolve_config_reference",
+]

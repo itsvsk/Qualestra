@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentinelqa.example.test/contracts/release-summary.schema.json",
+  "title": "ReleaseSummary",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "summary_id",
+    "run_id",
+    "report_id",
+    "run_status",
+    "gate_outcome",
+    "verified_defects",
+    "defects_by_severity",
+    "coverage_metrics",
+    "blockers",
+    "release_confidence",
+    "source_fingerprint",
+    "generated_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "summary_id": {"type": "string", "format": "uuid"},
+    "run_id": {"type": "string", "format": "uuid"},
+    "report_id": {"type": "string", "format": "uuid"},
+    "run_status": {
+      "enum": [
+        "queued", "preparing", "exploring", "analyzing", "verifying", "reporting",
+        "gating", "passed", "warned", "blocked", "cancelling", "cancelled", "failed"
+      ]
+    },
+    "gate_outcome": {"enum": ["PASS", "WARN", "BLOCK"]},
+    "verified_defects": {"type": "integer", "minimum": 0},
+    "defects_by_severity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["low", "medium", "high", "critical"],
+      "properties": {
+        "low": {"type": "integer", "minimum": 0},
+        "medium": {"type": "integer", "minimum": 0},
+        "high": {"type": "integer", "minimum": 0},
+        "critical": {"type": "integer", "minimum": 0}
+      }
+    },
+    "coverage_metrics": {
+      "type": "object",
+      "additionalProperties": {"type": "number", "minimum": 0}
+    },
+    "blockers": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+    "release_confidence": {"type": "number", "minimum": 0, "maximum": 1},
+    "source_fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "generated_at": {"type": "string", "format": "date-time"}
+  }
+}

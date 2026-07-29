@@ -1,0 +1,47 @@
+schema_version: "1.0"
+features:
+  - id: authorization
+    patterns: ["**/auth/**", "**/permissions/**", "*authorization*", "*role*"]
+    api_prefixes: ["/auth", "/users", "/members"]
+    risk: 1.0
+    adjacent: [tenant]
+  - id: tenant
+    patterns: ["*tenant*", "*organization*", "*workspace*"]
+    api_prefixes: ["/organizations", "/workspaces"]
+    risk: 1.0
+    adjacent: [authorization]
+  - id: billing
+    patterns: ["*billing*", "*plan*", "*subscription*"]
+    api_prefixes: ["/billing", "/plans", "/subscriptions"]
+    risk: 0.9
+    adjacent: [authorization]
+  - id: export
+    patterns: ["*export*", "*download*", "*csv*"]
+    api_prefixes: ["/exports", "/downloads"]
+    risk: 0.85
+    adjacent: [audit]
+  - id: audit
+    patterns: ["*audit*", "*event*"]
+    api_prefixes: ["/audit", "/events"]
+    risk: 0.8
+    adjacent: []
+  - id: work_item
+    patterns: ["*work_item*", "*work-item*", "*task*"]
+    api_prefixes: ["/work-items", "/tasks"]
+    risk: 0.8
+    adjacent: [project]
+  - id: project
+    patterns: ["*project*"]
+    api_prefixes: ["/projects"]
+    risk: 0.7
+    adjacent: [work_item]
+  - id: web
+    patterns: ["**/web/**", "*.tsx", "*.jsx", "*.html", "*.css"]
+    api_prefixes: []
+    risk: 0.6
+    adjacent: [accessibility]
+  - id: accessibility
+    patterns: ["*accessibility*", "*a11y*"]
+    api_prefixes: ["/accessibility"]
+    risk: 0.7
+    adjacent: [web]

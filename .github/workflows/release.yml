@@ -1,0 +1,89 @@
+name: Qualestra release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+      attestations: write
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install uv==0.11.29
+      - run: uv sync --locked --extra dev
+      - id: version
+        shell: bash
+        run: |
+          version="$(uv run python -c 'from sentinelqa import __version__; print(__version__)')"
+          test "v${version}" = "${GITHUB_REF_NAME}"
+          echo "version=${version}" >> "${GITHUB_OUTPUT}"
+      - run: uv run python scripts/release_check.py --public-release
+      - run: uv run ruff format --check . && uv run ruff check .
+      - run: uv run mypy sentinelqa apps atlas scripts
+      - run: uv run pytest
+      - run: uv build
+      - run: python -m venv /tmp/qualestra-package
+      - run: /tmp/qualestra-package/bin/pip install dist/*.whl
+      - run: /tmp/qualestra-package/bin/qualestra --version
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qualestra-${{ steps.version.outputs.version }}
+          path: dist/
+          if-no-files-found: error
+          retention-days: 30
+      - uses: actions/attest@v4
+        with:
+          subject-path: dist/*
+
+  images:
+    needs: package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+      attestations: write
+    strategy:
+      matrix:
+        include:
+          - image: qualestra-worker
+            dockerfile: Dockerfile
+          - image: qualestra-dashboard
+            dockerfile: apps/dashboard/Dockerfile
+    steps:
+      - uses: actions/checkout@v4
+        with: {persist-credentials: false}
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - id: build
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}:${{ needs.package.outputs.version }}
+          build-args: |
+            SENTINELQA_VERSION=${{ needs.package.outputs.version }}
+            SENTINELQA_REVISION=${{ github.sha }}
+            SENTINELQA_SOURCE=https://github.com/${{ github.repository }}
+      - uses: actions/attest@v4
+        with:
+          subject-name: ghcr.io/${{ github.repository_owner }}/${{ matrix.image }}
+          subject-digest: ${{ steps.build.outputs.digest }}
+          push-to-registry: true

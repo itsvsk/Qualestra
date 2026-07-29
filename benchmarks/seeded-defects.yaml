@@ -1,0 +1,12 @@
+version: 1
+faults:
+  F01: {title: Viewer can update a work item through the API, signal: authorization_bypass, severity: critical}
+  F02: {title: Cross-tenant work item readable by guessed ID, signal: tenant_isolation_bypass, severity: critical}
+  F03: {title: Successful plan-limit update is not persisted, signal: plan_limit_differential, severity: critical}
+  F04: {title: Double action creates duplicate work items, signal: duplicate_creation, severity: high}
+  F05: {title: Update API fails with injected HTTP 500, signal: http_5xx, severity: high}
+  F06: {title: Updated title reverts after refresh, signal: refresh_persistence, severity: high}
+  F07: {title: Completed export downloads zero bytes, signal: empty_completed_export, severity: high}
+  F08: {title: Audit event missing after role change, signal: missing_audit_event, severity: medium}
+  F09: {title: Project list exceeds latency threshold, signal: latency_threshold, severity: medium}
+  F10: {title: Create dialog violates labels and focus, signal: accessibility_serious, severity: medium}

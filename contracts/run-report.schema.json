@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://sentinelqa.example.test/contracts/run-report.schema.json",
+  "title": "RunReport",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "report_id",
+    "run_id",
+    "kind",
+    "format",
+    "content",
+    "digest",
+    "source_fingerprint",
+    "generated_at"
+  ],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "report_id": {"type": "string", "format": "uuid"},
+    "run_id": {"type": "string", "format": "uuid"},
+    "kind": {"enum": ["technical", "executive", "gate", "comparison", "defect"]},
+    "format": {"enum": ["json", "markdown", "html"]},
+    "content": {"type": "string", "minLength": 1},
+    "digest": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "source_fingerprint": {"type": "string", "pattern": "^sha256:[0-9a-f]{64}$"},
+    "generated_at": {"type": "string", "format": "date-time"}
+  }
+}

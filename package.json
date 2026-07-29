@@ -1,0 +1,10 @@
+{
+  "name": "sentinelqa-monorepo",
+  "private": true,
+  "packageManager": "pnpm@11.9.0",
+  "scripts": {
+    "build": "pnpm --filter @sentinelqa/dashboard build",
+    "test": "pnpm --filter @sentinelqa/dashboard test",
+    "lint": "pnpm --filter @sentinelqa/dashboard lint"
+  }
+}

@@ -1,0 +1,23 @@
+KNOWN_CAPABILITIES = frozenset(
+    {
+        "read_change_metadata",
+        "read_product_model",
+        "observe_ui",
+        "safe_ui_action",
+        "controlled_ui_action",
+        "read_openapi",
+        "safe_api_request",
+        "controlled_api_request",
+        "read_observations",
+        "read_test_data_adapter",
+        "evaluate_invariant",
+        "reset_test_target",
+        "seed_test_target",
+        "replay_ui",
+        "replay_api",
+        "read_evidence",
+        "read_verified_result",
+        "read_evidence_index",
+        "read_defect_history",
+    }
+)

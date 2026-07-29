@@ -1,0 +1,5 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema", "title": "AgentManifest", "type": "object", "additionalProperties": false,
+  "required": ["schema_version", "agent_type", "version", "implementation", "capabilities", "input_schema", "result_schema", "budget", "concurrency_class", "max_attempts"],
+  "properties": {"schema_version": {"const": "1.0"}, "agent_type": {"type": "string"}, "version": {"type": "string"}, "implementation": {"type": "string"}, "capabilities": {"type": "array", "items": {"type": "string"}, "uniqueItems": true}, "input_schema": {"type": "string"}, "result_schema": {"type": "string"}, "budget": {"type": "object"}, "concurrency_class": {"type": "string"}, "max_attempts": {"type": "integer", "minimum": 1}}
+}
