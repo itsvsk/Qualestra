@@ -16,6 +16,6 @@ LABEL org.opencontainers.image.title="Qualestra dashboard" \
       org.opencontainers.image.version="${SENTINELQA_VERSION}" \
       org.opencontainers.image.revision="${SENTINELQA_REVISION}" \
       org.opencontainers.image.source="${SENTINELQA_SOURCE}" \
-      org.opencontainers.image.licenses="NOASSERTION"
+      org.opencontainers.image.licenses="Apache-2.0"
 COPY apps/dashboard/nginx.conf /etc/nginx/conf.d/default.conf
 COPY --from=build /workspace/apps/dashboard/dist /usr/share/nginx/html

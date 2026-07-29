@@ -136,7 +136,7 @@ Acceptance:
 - standalone deployment mounts project configuration independently and does not require Atlas;
 - version, migration, workflow, provider-example, packaging, and deployment drift fail preflight;
 - tag automation validates the complete suite before publishing Python archives or GHCR images;
-- public release remains blocked until the owner selects and declares an explicit license;
+- Apache-2.0 licensing is declared consistently across source, package, and image metadata;
 - secrets and generated evidence are excluded from distribution artifacts.
 
 ## Explicit non-goals

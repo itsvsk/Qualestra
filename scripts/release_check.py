@@ -53,6 +53,8 @@ def check_release(root: Path, *, public_release: bool = False) -> ReleaseCheckRe
         "README.md",
         "CHANGELOG.md",
         "CONTRIBUTING.md",
+        "LICENSE",
+        "NOTICE",
         "SECURITY.md",
         "compose.standalone.yml",
         ".env.standalone.example",
@@ -132,17 +134,23 @@ def check_release(root: Path, *, public_release: bool = False) -> ReleaseCheckRe
     else:
         checks.append("oci_metadata")
 
-    license_files = sorted(path.name for path in root.glob("LICENSE*") if path.is_file())
+    license_text = _read_text(root / "LICENSE", issues)
+    notice_text = _read_text(root / "NOTICE", issues)
     license_expression = project.get("license")
     declared_license_files = project.get("license-files")
-    license_ready = bool(license_files and license_expression and declared_license_files)
-    if public_release and not license_ready:
+    expected_license_files = {"LICENSE", "NOTICE"}
+    license_ready = (
+        "Apache License" in license_text
+        and "Version 2.0, January 2004" in license_text
+        and "Copyright 2026 Vishal Appu Daniel" in notice_text
+        and license_expression == "Apache-2.0"
+        and isinstance(declared_license_files, list)
+        and expected_license_files.issubset(declared_license_files)
+        and all('org.opencontainers.image.licenses="Apache-2.0"' in value for value in dockerfiles)
+    )
+    if not license_ready:
         issues.append(
-            "public release requires an owner-selected LICENSE plus pyproject license metadata"
-        )
-    elif not license_ready:
-        warnings.append(
-            "public release remains blocked until the owner selects and declares a license"
+            "release requires Apache-2.0 LICENSE, NOTICE, package metadata, and OCI labels"
         )
     else:
         checks.append("license_metadata")

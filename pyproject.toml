@@ -7,6 +7,8 @@ name = "qualestra"
 dynamic = ["version"]
 description = "Supervised AI orchestration for evidence-first software quality"
 readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
 requires-python = ">=3.12"
 authors = [
   {name = "Vishal Appu Daniel", email = "vishal.appu.daniel@gmail.com"},

@@ -5,6 +5,7 @@
 [![CI](https://github.com/itsvsk/Qualestra/actions/workflows/ci.yml/badge.svg)](https://github.com/itsvsk/Qualestra/actions/workflows/ci.yml)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://www.python.org/)
 [![Playwright](https://img.shields.io/badge/Playwright-Chromium%20%7C%20Firefox%20%7C%20WebKit-2EAD33.svg)](https://playwright.dev/)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/status-engineering%20preview-orange.svg)](#project-status)
 
 Qualestra is an evidence-first, supervised QA orchestration system. It coordinates specialized
@@ -21,6 +22,9 @@ This repository is the public engineering snapshot of Qualestra. It contains the
 engine, logical agents, contracts, policy controls, dashboard, synthetic test product, tests, and
 deployment examples. Private development environments, generated evidence, credentials, internal
 progress records, and organization-specific test configurations are not included.
+
+Qualestra is an independent personal project by Vishal Appu Daniel. It is not affiliated with,
+sponsored by, or developed on behalf of any employer or other organization.
 
 ## Why Qualestra exists
 
@@ -270,11 +274,15 @@ orchestration, evidence pipeline, deterministic gate, reports, and offline conne
 implemented and tested. It is not yet presented as a hosted multi-tenant service or an unattended
 production-testing replacement.
 
-No public-use license has been selected yet. The source is published for review and demonstration,
-but reuse, modification, and redistribution rights are not granted until a `LICENSE` is added.
-
 See [Project overview](docs/project-overview.md), [enhancement roadmap](docs/enhancement-roadmap.md),
 and [changelog](CHANGELOG.md).
+
+## License
+
+Copyright 2026 Vishal Appu Daniel.
+
+Qualestra is licensed under the [Apache License 2.0](LICENSE). Required attribution notices are in
+[NOTICE](NOTICE).
 
 ## Responsible disclosure
 

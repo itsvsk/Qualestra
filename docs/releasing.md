@@ -12,10 +12,10 @@ provenance attestations. It does not publish to PyPI.
 
 ## Owner decisions before the first public tag
 
-Choose an explicit software license, add its full text as `LICENSE`, and declare its SPDX expression
-and `license-files` entry in `pyproject.toml`. This is intentionally not inferred by automation.
-Then decide whether the Python distribution should remain a GitHub release artifact or use PyPI
-trusted publishing.
+The source license is Apache-2.0 and is declared in `LICENSE`, `NOTICE`, `pyproject.toml`, and both
+container-image labels. Preserve those declarations and the personal copyright notice in every
+release. Decide whether the Python distribution should remain a GitHub release artifact or use
+PyPI trusted publishing.
 
 The GHCR packages created by the first workflow run may initially be private. Change their
 visibility only after reviewing the release contents and repository ownership.

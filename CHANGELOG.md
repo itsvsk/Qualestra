@@ -11,5 +11,4 @@ release candidates and may include contract changes.
 - Server-configured GitHub Issues, Jira, and Slack delivery providers.
 - Standalone container deployment, installable onboarding CLI, release checks, and provenance-ready
   tag automation.
-
-The first public tag remains gated on an explicit repository license.
+- Apache License 2.0 declarations for the source, Python distribution, and container images.

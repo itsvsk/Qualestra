@@ -1826,14 +1826,14 @@ Acceptance:
   database against the current head rather than a stale hard-coded revision;
 - release images carry OCI source, version, and revision labels, and the tag workflow grants only
   the permissions required for packages and provenance;
-- the public release path fails closed until the repository owner adds an explicit license and
-  matching package metadata;
-- no tag, Python package index upload, container publication, license choice, or hosted deployment
-  is claimed by local implementation alone.
+- the public release path validates the Apache-2.0 `LICENSE`, `NOTICE`, and matching package and
+  image metadata;
+- no tag, Python package index upload, container publication, or hosted deployment is claimed by
+  local implementation alone.
 
 Deferred from Milestone 10:
 
-- selection of legal license terms, which requires an explicit repository-owner decision;
+- any future license change, which requires an explicit repository-owner decision;
 - PyPI trusted publishing, Homebrew, standalone binaries, or platform-specific installers;
 - public benchmark/video hosting and portfolio-site publication;
 - hosted authentication, tenant isolation, OAuth administration, and secret-manager integration.

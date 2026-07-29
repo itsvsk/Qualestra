@@ -7,7 +7,7 @@ LABEL org.opencontainers.image.title="Qualestra worker" \
       org.opencontainers.image.version="${SENTINELQA_VERSION}" \
       org.opencontainers.image.revision="${SENTINELQA_REVISION}" \
       org.opencontainers.image.source="${SENTINELQA_SOURCE}" \
-      org.opencontainers.image.licenses="NOASSERTION"
+      org.opencontainers.image.licenses="Apache-2.0"
 ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 PATH="/app/.venv/bin:$PATH"
 WORKDIR /app
 COPY pyproject.toml uv.lock ./

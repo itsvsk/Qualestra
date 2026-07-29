@@ -68,8 +68,9 @@ isolation, enterprise identity, distributed browser capacity, bidirectional tick
 long-running production hardening, and a formal public benchmark publication remain future work.
 The default deployment is intended for local or private test environments.
 
-No public-use license has been selected. Until a license is added, this repository is available for
-viewing and demonstration rather than reuse or redistribution.
+Qualestra is an independent personal project by Vishal Appu Daniel and is not affiliated with,
+sponsored by, or developed on behalf of any employer or other organization. It is licensed under
+the Apache License 2.0; see [`LICENSE`](../LICENSE) and [`NOTICE`](../NOTICE).
 
 ## Public and private repository model
 
